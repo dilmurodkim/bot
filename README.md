@@ -45,10 +45,8 @@ async def show_letter_menu(message: types.Message):
         markup.insert(InlineKeyboardButton(harf, callback_data=f"harf_{harf}"))
     markup.add(InlineKeyboardButton("\u2b05\ufe0f Orqaga", callback_data="back_to_main"))
     await message.answer("Quyidagilardan birini tanlang:", reply_markup=markup)
-
-@dp.callback_query_handler(lambda c: c.data.startswith("harf_"))
-async def show_letter_info(callback: types.CallbackQuery):
-    harf = callback.data.replace("harf_", "  "ㄱ": "talaffuz: ㄱ (g/k):\ngap boshida k\nichida g kabi\n\nmisol: 고기\ntalaffuzi: gogi\ntarjima: go‘sht",
+hangeul_letters_data = {
+    "ㄱ": "talaffuz: ㄱ (g/k):\ngap boshida k\nichida g kabi\n\nmisol: 고기\ntalaffuzi: gogi\ntarjima: go‘sht",
     "ㄲ": "talaffuz: ㄲ (kk):\nkuchli k tovushi\n\nmisol: 끼다\ntalaffuzi: kkida\ntarjima: kiymoq",
     "ㄴ": "talaffuz: ㄴ (n):\ndoimo n kabi\n\nmisol: 누구\ntalaffuzi: dugu\ntarjima: kim?",
     "ㄷ": "talaffuz: ㄷ (d/t):\nboshida t\nichida d\n\nmisol: 다리\ntalaffuzi: dari\ntarjima: oyoq / ko‘prik",
@@ -86,7 +84,11 @@ async def show_letter_info(callback: types.CallbackQuery):
     "ㅟ": "talaffuz: ㅟ (wi):\nu + i\n\nmisol: 위\ntalaffuzi: wi\ntarjima: usti","ㅠ": "talaffuz: ㅠ (yau):\npastga qarab yu\n\nmisol: 유리\ntalaffuzi: yuri\ntarjima: oynavand",
     "ㅡ": "talaffuz: ㅡ (eu):\nog‘iz tekis\n\nmisol: 으깨다\ntalaffuzi: ukkæda\ntarjima: ezmoq",
     "ㅢ": "talaffuz: ㅢ (ui):\neu + i\n\nmisol: 의사\ntalaffuzi: ŭisa\ntarjima: shifokor",
-    "ㅣ": "talaffuz: ㅣ (i):\ni tovushi\n\nmisol: 이름\ntalaffuzi: irŭm\ntarjima: ism")
+    "ㅣ": "talaffuz: ㅣ (i):\ni tovushi\n\nmisol: 이름\ntalaffuzi: irŭm\ntarjima: ism"
+}
+@dp.callback_query_handler(lambda c: c.data.startswith("harf_"))
+async def show_letter_info(callback: types.CallbackQuery):
+    harf = callback.data.replace("harf_", " ")
     matn = hangeul_letters_data.get(harf, "Ma’lumot topilmadi")
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton("\u2b05\ufe0f Orqaga", callback_data="back_to_letters"))
@@ -235,4 +237,3 @@ if __name__ == '__main__':
         host=WEBAPP_HOST,
         port=WEBAPP_PORT,
     )
-# bot
